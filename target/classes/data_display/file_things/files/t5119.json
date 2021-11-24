@@ -1,0 +1,20 @@
+[
+    {
+        "round": 2,
+        "inner": 9,
+        "outer": 20,
+        "bottom": 0
+    },
+    {
+        "round": 5,
+        "inner": 6,
+        "outer": 7,
+        "bottom": 0
+    },
+    {
+        "round": 8,
+        "inner": 20,
+        "outer": 2,
+        "bottom": 2
+    }
+]
