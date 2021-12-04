@@ -2,17 +2,22 @@ package data_display;
 
 import data_display.display.display_main;
 import data_display.display.display_table;
-import data_display.file_things.data_from_phone;
 import data_display.file_things.get_data;
 import data_display.file_things.json_gen;
 
 import javax.swing.*;
 
+import org.apache.log4j.helpers.NullEnumeration;
 import org.json.simple.parser.ParseException;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Console;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * Hello world!
@@ -22,25 +27,20 @@ public class App {
     app_input appIn = new app_input();
     display_main d = new display_main();
     json_gen jg = new json_gen();
-    data_from_phone dff = new data_from_phone();
 
-    JTextField teams[] = { new JTextField(4), new JTextField(4), new JTextField(4) };
-    JTextField shown = new JTextField();
-    JTextField selctedPort = new JTextField();
+    JTextField teams[] = { new JTextField(4), new JTextField(4), new JTextField(4),new JTextField(4), new JTextField(4), new JTextField(4) };
+    JTextField shown = new JTextField();//catagory ex. bottom
     JTextField rounds = new JTextField(2);
-    JTextArea scanTerm = new JTextArea();
     JPanel graphFrame = new JPanel();
     JButton reloadButton = new JButton();
     JButton reAverageButton = new JButton();
-    JButton connect = new JButton();
-    JButton scanner = new JButton();
-
+    JTextField jsonSource = new JTextField();
     display_table dt = new display_table();
     JTable table = dt.table;
 
     get_data data = new get_data();
 
-    int teamNums[] = { -1, -1, -1 };
+    int teamNums[] = { -1, -1, -1,-1,-1,-1};
 
     public static void main(String[] args) {
         App a = new App();
@@ -52,6 +52,7 @@ public class App {
         teamNums = appIn.getInputs(teams);
         d.rounds = appIn.getRounds(rounds);
         dt.resetTable(data, teamNums[0]);
+        
         reGraph();
     }
 
@@ -69,34 +70,28 @@ public class App {
     }
 
     public void mainLoop() {
-        d.init(data, table, graphFrame, teams, reloadButton, rounds, reAverageButton, shown, connect, scanner,
-                selctedPort, scanTerm);
+        try{
+jsonSource.setText(Files.readString(Paths.get("/Users/lostl/Desktop/code/java/steam_display/src/main/java/data_display/lastRepo.txt")));
+        }catch(FileNotFoundException e){
+
+        }catch(IOException e){
+
+        }
+        
+        d.init(data, table, graphFrame, teams, reloadButton, rounds, reAverageButton, shown, jsonSource);
         reloadButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                changeTeams();
-            }
-        });
-        reAverageButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                reCalcAverages();
-            }
-        });
-        connect.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                dff.connect(selctedPort.getText());
-                if (dff.connected == true) {
-                    if (dff.initIOStream() == true) {
-                        dff.initListener();
-                    }
+                data.directory = jsonSource.getText().replaceAll("C:", "");
+                try {
+                    Files.writeString(Paths.get("/Users/lostl/Desktop/code/java/steam_display/src/main/java/data_display/lastRepo.txt"), data.directory);
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
                 }
+                changeTeams();
+                
             }
         });
-        scanner.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                dff.searchForPorts(scanTerm);
-            }
-        });
-
         // loop
         while (true) {
             // reGraph();

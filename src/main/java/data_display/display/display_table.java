@@ -6,7 +6,7 @@ import javax.swing.table.TableColumn;
 import data_display.file_things.get_data;
 
 public class display_table {
-    public JTable table = new JTable(12,1);
+    public JTable table = new JTable(13,1);
     public void resetTable(get_data data, int team){
         Object vals[] = data.getDataTable(team);
         for(int i = 0;i<12;i++){

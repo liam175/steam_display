@@ -54,7 +54,7 @@ public class json_gen {
                 jsonArray.add(objs[x]);
             }
             FileWriter file = new FileWriter(
-                    "/Users/lostl/Desktop/code/java/steam_display/src/main/java/data_display/file_things/files/average.json");
+                data.directory.replace('\'', '/')+"/average.json");
             file.write(jsonArray.toJSONString());
             file.flush();
             file.close();

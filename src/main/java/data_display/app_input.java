@@ -7,7 +7,7 @@ import data_display.file_things.get_data;
 public class app_input {
 
     public int[] getInputs(JTextField teams[]) {
-        int out[] = { -1, -1, -1 };
+        int out[] = { -1, -1, -1,-1,-1,-1,-1,-1 };
         for (int i = 0; i < teams.length; i++) {
             try {
                 out[i] = Integer.parseInt(teams[i].getText());

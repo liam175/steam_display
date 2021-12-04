@@ -15,14 +15,14 @@ import org.json.simple.parser.JSONParser;
 public class get_data {
     // gets right name for table pos
     public String intToJson[] = { "round", "inner", "outer", "bottom" };
-
+    public String directory = "";
     public Object[] getDataTable(int team) {
         Object out[] = {};
         JSONParser parser = new JSONParser();
         Gson gson = new Gson();
         try {
             Object s = parser.parse(new FileReader(
-                    "/Users/lostl/Desktop/code/java/steam_display/src/main/java/data_display/file_things/files/t" + team
+                directory.replace('\'', '/')+"/t" + team
                             + ".json"));
 
             out = gson.fromJson(s.toString(), Object[].class);
@@ -46,9 +46,7 @@ public class get_data {
         JSONParser parser = new JSONParser();
         if (team > 0) {
             try {
-                Object s = parser.parse(new FileReader(
-                        "/Users/lostl/Desktop/code/java/steam_display/src/main/java/data_display/file_things/files/t"
-                                + team + ".json"));
+                Object s = parser.parse(new FileReader(directory.replace('\'', '/')+"/t"+ team + ".json"));
                 JSONArray main_array = (JSONArray) s;
                 if (main_array.size() > roundNum) {
                     JSONObject round = (JSONObject) main_array.get(roundNum);
@@ -68,21 +66,22 @@ public class get_data {
             } catch (NullPointerException e) {
                 System.out.println("Null pointer exeption");
             }
-        } 
+        }
         return (int) fin;
     }
-    public int[] getAverage(int tablePos){
-        int fin[] = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
+
+    public int[] getAverage(int tablePos) {
+        int fin[] = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
         JSONParser parser = new JSONParser();
         try {
             Object s = parser.parse(new FileReader(
-                    "/Users/lostl/Desktop/code/java/steam_display/src/main/java/data_display/file_things/files/average.json"));
+                directory.replace('\'', '/')+"/average.json"));
             JSONArray main_array = (JSONArray) s;
-            for(int r = 0;r<main_array.size();r++){
+            for (int r = 0; r < main_array.size(); r++) {
                 JSONObject round = (JSONObject) main_array.get(r);
                 fin[r] = (int) (long) round.get(intToJson[tablePos]);
             }
-                
+
         } catch (ParseException pe) {
 
             System.out.println("position: " + pe.getPosition());
@@ -99,6 +98,7 @@ public class get_data {
         }
         return fin;
     }
+
     public int[][] getTeam(int team, int tablePos) {
         int testArray[][] = { { 0, -1 }, { 0, -1 }, { 0, -1 }, { 0, -1 }, { 0, -1 }, { 0, -1 }, { 0, -1 }, { 0, -1 },
                 { 0, -1 }, { 0, -1 }, { 0, -1 }, { 0, -1 } };
