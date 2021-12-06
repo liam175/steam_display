@@ -25,7 +25,7 @@ public class json_gen {
                 new int[tablesPoss], new int[tablesPoss], new int[tablesPoss] };
         for (int i = 0; i < 10000; i++) {
             for (int z = 0; z < vals.length; z++) {
-                int input = data.getData(i, z, 0);
+                Float input = data.getData(i, z, 0);
                 for (int j = 0; j < tablesPoss - 1; j++) {
                     input = data.getData(i, z, j + 1);
                     if (input != -1) {

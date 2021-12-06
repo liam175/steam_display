@@ -14,7 +14,7 @@ import org.json.simple.parser.JSONParser;
 
 public class get_data {
     // gets right name for table pos
-    public String intToJson[] = { "round", "inner", "outer", "bottom" };
+    public String intToJson[] = { "missAver", "round","bottom", "outer", "InAver", "inner", "miss" };
     public String directory = "";
     public Object[] getDataTable(int team) {
         Object out[] = {};
@@ -41,8 +41,8 @@ public class get_data {
         return out;
     }
 
-    public int getData(int team, int roundNum, int tablePos) {
-        long fin = -1;
+    public float getData(int team, int roundNum, int tablePos) {
+        float fin = -1;
         JSONParser parser = new JSONParser();
         if (team > 0) {
             try {
@@ -50,7 +50,12 @@ public class get_data {
                 JSONArray main_array = (JSONArray) s;
                 if (main_array.size() > roundNum) {
                     JSONObject round = (JSONObject) main_array.get(roundNum);
-                    fin = (long) round.get(intToJson[tablePos]);
+                    try{
+                        fin = Float.parseFloat(String.valueOf(round.get(intToJson[tablePos])));
+                    }catch(NumberFormatException e){
+                        System.out.println("broken number");
+                    }
+                    
                 }
             } catch (ParseException pe) {
 
@@ -67,7 +72,7 @@ public class get_data {
                 System.out.println("Null pointer exeption");
             }
         }
-        return (int) fin;
+        return (float) fin;
     }
 
     public int[] getAverage(int tablePos) {
@@ -99,11 +104,11 @@ public class get_data {
         return fin;
     }
 
-    public int[][] getTeam(int team, int tablePos) {
-        int testArray[][] = { { 0, -1 }, { 0, -1 }, { 0, -1 }, { 0, -1 }, { 0, -1 }, { 0, -1 }, { 0, -1 }, { 0, -1 },
+    public float[][] getTeam(int team, int tablePos) {
+        float testArray[][] = { { 0, -1 }, { 0, -1 }, { 0, -1 }, { 0, -1 }, { 0, -1 }, { 0, -1 }, { 0, -1 }, { 0, -1 },
                 { 0, -1 }, { 0, -1 }, { 0, -1 }, { 0, -1 } };
         for (int j = 0; j < testArray.length; j++) {
-            int in[] = { 0, -1 };
+            float in[] = { 0f, -1f };
             if (getData(team, 0, 0) != -1) {
                 in[0] = getData(team, j, 0);
                 in[1] = getData(team, j, tablePos);

@@ -15,7 +15,7 @@ public class display_main extends JFrame {
     Color steamRedA = new Color(98, 28, 25);// light
     Color steamRedB = new Color(46, 13, 12);// dark
     Color steamGold = new Color(178, 159, 76);// gold
-    public Color colorTable[] = { Color.red, Color.blue, Color.green, Color.cyan, Color.MAGENTA, Color.ORANGE, Color.black};
+    public Color colorTable[] = { Color.red, Color.blue, Color.green, Color.cyan, Color.MAGENTA, Color.ORANGE,Color.WHITE, Color.black};
     public int shown = 1;
 
     public void init(get_data data, JTable table, JPanel graphFrame, JTextField teams[], JButton teamSetButton,
@@ -89,16 +89,20 @@ public class display_main extends JFrame {
         }
         int roundX = 1400 / rounds;
         for (int t = 0; t < teams.length; t++) {
+            int multi2 = 1;
             g2.setColor(colorTable[t]);
-            int points[][] = data.getTeam(teams[t], tablePos);
+            float[][] points = data.getTeam(teams[t], tablePos);
+            if(points[0][1]<1&&points[0][1]>0){
+                multi2 = 10;
+            }
             for (int i = 0; i < points.length - 1; i++) {
                 if (points[i + 1][1] != -1) {
                     if (displayStyleGames) {
-                        g2.drawLine(i * xMulti + x, 600 - points[i][1] * yMulti, (i + 1) * xMulti + x,
-                                600 - points[i + 1][1] * yMulti);// each game is a pos
+                        g2.drawLine(i * xMulti + x, (int)(600 - points[i][1] * yMulti*multi2), (i + 1) * xMulti + x,
+                        (int) (600 - points[i + 1][1] * yMulti*multi2));// each game is a pos
                     } else {
-                        g2.drawLine(points[i][0] * roundX + x, 600 - points[i][1] * yMulti,
-                                points[i + 1][0] * roundX + x, 600 - points[i + 1][1] * yMulti);// each round is a pos
+                        g2.drawLine((int)(points[i][0] * roundX + x), (int)(600 - points[i][1] * yMulti*multi2),
+                        (int)(points[i + 1][0] * roundX + x), (int)(600 - points[i + 1][1] * yMulti *multi2));// each round is a pos
                     }
 
                 }
