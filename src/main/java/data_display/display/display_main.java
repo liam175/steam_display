@@ -77,7 +77,7 @@ public class display_main extends JFrame {
 
     int x = 63;
 
-    public void graph(int[] teams, get_data data, Graphics g, int tablePos) {
+    public void graph(int[] teams, get_data data, Graphics g, int tablePos) {//graphs main
         super.paint(g);
         Graphics2D g2 = (Graphics2D) g;
         boolean displayStyleGames = false;// wether you show it as 12 x points or rounds as x points
@@ -89,7 +89,7 @@ public class display_main extends JFrame {
         }
         int roundX = 1400 / rounds;
         for (int t = 0; t < teams.length; t++) {
-            int multi2 = 1;
+            int multi2 = 1;//for if its in %
             g2.setColor(colorTable[t]);
             float[][] points = data.getTeam(teams[t], tablePos);
             if(points[0][1]<1&&points[0][1]>0){
@@ -111,7 +111,7 @@ public class display_main extends JFrame {
 
     }
 
-    public void graphAverage(int tablePos, get_data data, Graphics2D g2) {
+    public void graphAverage(int tablePos, get_data data, Graphics2D g2) {//graphs average
         int points[] = data.getAverage(tablePos);
         g2.setColor(colorTable[6]);
         for (int i = 0; i < points.length - 1; i++) {

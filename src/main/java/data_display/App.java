@@ -28,7 +28,7 @@ public class App {
     display_main d = new display_main();
     json_gen jg = new json_gen();
 
-    JTextField teams[] = { new JTextField(4), new JTextField(4), new JTextField(4),new JTextField(4), new JTextField(4), new JTextField(4) };
+    JTextField teams[] = { new JTextField(4), new JTextField(4), new JTextField(4),new JTextField(4), new JTextField(4), new JTextField(4) };//add here to add teams
     JTextField shown = new JTextField();//catagory ex. bottom
     JTextField rounds = new JTextField(2);
     JPanel graphFrame = new JPanel();

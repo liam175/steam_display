@@ -16,7 +16,7 @@ import data_display.display.display_main;
 
 import org.json.simple.parser.JSONParser;
 
-public class json_gen {
+public class json_gen {//this one just recalculates the averages
     int tablesPoss = 4;
 
     public void reCalculate(get_data data) throws IOException, ParseException {//

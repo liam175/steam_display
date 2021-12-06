@@ -14,7 +14,7 @@ import org.json.simple.parser.JSONParser;
 
 public class get_data {
     // gets right name for table pos
-    public String intToJson[] = { "missAver", "round","bottom", "outer", "InAver", "inner", "miss" };
+    public String intToJson[] = { "missAver", "round","bottom", "outer", "InAver", "inner", "miss" };//change this to = whatever the cam programs puts the order in
     public String directory = "";
     public Object[] getDataTable(int team) {
         Object out[] = {};
@@ -42,6 +42,7 @@ public class get_data {
     }
 
     public float getData(int team, int roundNum, int tablePos) {
+        //gets individual things using a team num and round number (1-12) and a position which is derived form inttojson reversed
         float fin = -1;
         JSONParser parser = new JSONParser();
         if (team > 0) {
@@ -76,7 +77,7 @@ public class get_data {
     }
 
     public int[] getAverage(int tablePos) {
-        int fin[] = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
+        float fin[] = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
         JSONParser parser = new JSONParser();
         try {
             Object s = parser.parse(new FileReader(
@@ -84,7 +85,7 @@ public class get_data {
             JSONArray main_array = (JSONArray) s;
             for (int r = 0; r < main_array.size(); r++) {
                 JSONObject round = (JSONObject) main_array.get(r);
-                fin[r] = (int) (long) round.get(intToJson[tablePos]);
+                fin[r] = (Float) (long) round.get(intToJson[tablePos]);
             }
 
         } catch (ParseException pe) {
